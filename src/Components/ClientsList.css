@@ -1,4 +1,5 @@
 .sidebar{
-  width: 28% !important;
-  overflow: hidden !important;
+  width: auto !important;
+  padding-right: 1% !important;
+
 }
