@@ -6,13 +6,18 @@ import MainClient from './Components/MainClient';
 
 
 class App extends Component {
-  
+  constructor(props){
+    super(props);
+    this.state = {
+      client: ""
+    }
+  }
 
   render() {
     return (
       <div>
       <ClientsList />
-      <MainClient />
+
       </div>
     );
   }
