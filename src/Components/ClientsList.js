@@ -11,22 +11,25 @@ class ClientsList extends React.Component{
     this.state = {
       client: "",
       mainClient: Clients[0],
-    }
-    this.handleClick = this.handleClick.bind(this);
-    this.getClientObj = this.getClientObj.bind(this);
-  }
+      visibility: ""
 
-  handleClick(client){
-    this.setState({client: client});
-    this.getClientObj();
+    }
+    this.getClientObj = this.getClientObj.bind(this);
+    this.searchClients = this.searchClients.bind(this);
   }
 
   getClientObj(clientName){
     Clients.map(client=>{
       if (client.general.firstName === clientName){
-        this.setState({mainClient: client});
+        this.setState({
+          client: clientName,
+          mainClient: client});
       }
     })
+  }
+
+  searchClients(clientSearch){
+    this.setState({visibility: clientSearch});
   }
 
   render(){
@@ -34,12 +37,12 @@ class ClientsList extends React.Component{
 
 <div>
       <div class="ui very wide sidebar vertical menu visible">
-      <SearchBar onChange={this.handleChange}/>
+      <SearchBar searchClients={this.searchClients}/>
+      <h1>{this.state.visibility}</h1>
       {Clients.map(client=>{
-         return (<Client client={client} key={client.general.firstName} getClient={this.getClientObj} clientID={client.general.firstName}/>
+         return (<Client client={client} key={client.general.firstName} getClient={this.getClientObj} clientID={client.general.firstName} clientSearch={this.state.visibility}/>
        );
-
-      })}
+     })}
    </div>
    <MainClient client = {this.state.mainClient} />
    </div>

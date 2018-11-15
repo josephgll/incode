@@ -1,3 +1,7 @@
 .item{
   width: 200% !important;
 }
+
+.hiddenn{
+  display: none !important;
+}
