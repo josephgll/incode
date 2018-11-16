@@ -41,6 +41,7 @@ class Client extends React.Component{
       getClientFullInfo(){
       let dataArray = [];
       let dataArray2 = [];
+      let cropped = [];
       let clientFullData = [];
       let data = this.props.client;
       for (const value in data){
@@ -51,6 +52,13 @@ class Client extends React.Component{
       })
       clientFullData = dataArray2[0].concat(dataArray2[1],dataArray2[2],dataArray2[3]);
       clientFullData.splice(2,1);
+      clientFullData.forEach(data=>{
+        cropped.push(data.split(' '));
+      })
+      clientFullData = [];
+      cropped.forEach(data=>{
+        clientFullData = clientFullData.concat(data);
+      })
       this.setState({clientFullData: clientFullData});
     }
 
@@ -59,11 +67,11 @@ class Client extends React.Component{
     }
 
     dataChecker(){
+      let subStr = [];
       let userSearch = this.props.clientSearch.toUpperCase();
-      let subStr = this.state.clientFullData.map(data=>{
+      subStr = this.state.clientFullData.map(data=>{
         return data.substring(0,this.props.clientSearch.length).toUpperCase();
       });
-      console.log(subStr);
        return window.$.inArray(userSearch , subStr);
     }
 
