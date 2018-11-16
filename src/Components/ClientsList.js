@@ -5,8 +5,8 @@ import Clients from '../clients.json';
 import SearchBar from './SearchBar';
 import MainClient from './MainClient.js'
 
-class ClientsList extends React.Component{
-  constructor(props){
+class ClientsList extends React.Component {
+  constructor(props) {
     super(props);
     this.state = {
       client: "",
@@ -18,35 +18,29 @@ class ClientsList extends React.Component{
     this.searchClients = this.searchClients.bind(this);
   }
 
-  getClientObj(clientName){
-    Clients.map(client=>{
-      if (client.general.firstName === clientName){
-        this.setState({
-          client: clientName,
-          mainClient: client});
+  getClientObj(clientName) {
+    Clients.map(client => {
+      if (client.general.firstName === clientName) {
+        this.setState({client: clientName, mainClient: client});
       }
     })
   }
 
-  searchClients(clientSearch){
+  searchClients(clientSearch) {
     this.setState({visibility: clientSearch});
   }
 
-  render(){
-    return(
-
-<div>
-      <div class="ui very wide sidebar vertical menu visible">
-      <SearchBar searchClients={this.searchClients}/>
-      <h1>{this.state.visibility}</h1>
-      {Clients.map(client=>{
-         return (<Client client={client} key={client.general.firstName} getClient={this.getClientObj} clientID={client.general.firstName} clientSearch={this.state.visibility}/>
-       );
-     })}
-   </div>
-   <MainClient client = {this.state.mainClient} />
-   </div>
-    )
+  render() {
+    return (<div>
+      <div className="ui very wide sidebar vertical menu visible">
+        <SearchBar searchClients={this.searchClients}/> {
+          Clients.map(client => {
+            return (<Client client={client} key={client.general.firstName} getClient={this.getClientObj} clientID={client.general.firstName} clientSearch={this.state.visibility}/>);
+          })
+        }
+      </div>
+      <MainClient client={this.state.mainClient}/>
+    </div>)
   }
 }
 

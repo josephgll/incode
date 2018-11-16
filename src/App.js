@@ -1,12 +1,9 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import ClientsList from './Components/ClientsList';
-import Client from './Components/Client';
-import MainClient from './Components/MainClient';
-
+import './App.css';
 
 class App extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       client: ""
@@ -14,12 +11,10 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <div>
-      <ClientsList />
+    return (<div>
+      <ClientsList/>
 
-      </div>
-    );
+    </div>);
   }
 }
 
