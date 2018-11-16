@@ -10,8 +10,8 @@ class Client extends React.Component{
     this.state ={
       div: "item"
     }
-    this.handleClick = this.handleClick.bind(this);
-
+  this.handleClick = this.handleClick.bind(this);
+  this.componentDidUpdate = this.componentDidUpdate.bind(this);
   }
 
   handleClick(event){
@@ -19,24 +19,27 @@ class Client extends React.Component{
     this.props.getClient(clientKey);
   }
 
-  componentDidUpdate(){
-    if (this.props.clientID!==this.props.clientSearch){
-      window.$('#'+this.props.clientID).addClass('hiddenn');
+   componentDidUpdate(){
+     let userSearch = this.props.clientSearch.toUpperCase();
+     let subStr = this.props.clientID.substring(0,this.props.clientSearch.length).toUpperCase();
+     for (let i = 0; i<this.props.clientSearch.length; i++){
+       if (userSearch!==subStr){
+         window.$('#'+this.props.clientID).addClass('hiddenn');
+       }
+       else if (userSearch===subStr){
+         window.$('#'+this.props.clientID).removeClass('hiddenn');
+       }
+     }
+     if (this.props.clientSearch===""){
+       window.$('.item').removeClass('hiddenn');
+     }
     }
-    else if (this.props.clientID===this.props.clientSearch){
-      window.$('#'+this.props.clientID).removeClass('hiddenn');
-    }
-    if (this.props.clientSearch===""){
-      window.$('.item').removeClass('hiddenn');
-    }
-  }
-
 
   render(){
     return(
-      <div class="ui list selection celled big" onMouseOut={this.mouseOut}>
+      <div class="ui list selection celled big">
   <div class='item' id={this.props.clientID} onClick={this.handleClick}>
-    <img class="ui mini image" src={this.props.client.general.avatar} onClick={this.searchEngine} />
+    <img class="ui mini image" src={this.props.client.general.avatar} />
     <div class="content">
       <div class="header">{this.props.client.general.firstName} {this.props.client.general.lastName}</div>
       {this.props.client.job.title} {this.searchEngine}
