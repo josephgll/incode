@@ -76,8 +76,7 @@ class Client extends React.Component {
       <div className='item' id={this.props.clientID} onClick={this.handleClick}>
         <img className="ui mini image" alt="client avatar" src={this.props.client.general.avatar}/>
         <div className="content">
-          <div className="header">{this.props.client.general.firstName}
-            {this.props.client.general.lastName}</div>
+          <div className="header">{this.props.client.general.firstName} {this.props.client.general.lastName}</div>
           {this.props.client.job.title}
           {this.searchEngine}
         </div>
