@@ -7,11 +7,15 @@ import ClientsList from './ClientsList';
 class Client extends React.Component{
   constructor(props){
     super(props);
-    this.state ={
-      div: "item"
+    this.state = {
+      clientFullData: [],
+      croppedData: []
     }
   this.handleClick = this.handleClick.bind(this);
   this.componentDidUpdate = this.componentDidUpdate.bind(this);
+  this.getClientFullInfo = this.getClientFullInfo.bind(this);
+  this.componentDidMount = this.componentDidMount.bind(this);
+  this.dataChecker = this.dataChecker.bind(this);
   }
 
   handleClick(event){
@@ -20,25 +24,54 @@ class Client extends React.Component{
   }
 
    componentDidUpdate(){
-     let userSearch = this.props.clientSearch.toUpperCase();
-     let subStr = this.props.clientID.substring(0,this.props.clientSearch.length).toUpperCase();
      for (let i = 0; i<this.props.clientSearch.length; i++){
-       if (userSearch!==subStr){
+
+       if (this.dataChecker()<0){
          window.$('#'+this.props.clientID).addClass('hiddenn');
        }
-       else if (userSearch===subStr){
+       else if (this.dataChecker()>=0){
          window.$('#'+this.props.clientID).removeClass('hiddenn');
        }
      }
      if (this.props.clientSearch===""){
        window.$('.item').removeClass('hiddenn');
      }
+   }
+
+      getClientFullInfo(){
+      let dataArray = [];
+      let dataArray2 = [];
+      let clientFullData = [];
+      let data = this.props.client;
+      for (const value in data){
+          dataArray.push(data[value]);
+      }
+      dataArray.forEach(data=>{
+        dataArray2.push(Object.values(data));
+      })
+      clientFullData = dataArray2[0].concat(dataArray2[1],dataArray2[2],dataArray2[3]);
+      clientFullData.splice(2,1);
+      this.setState({clientFullData: clientFullData});
     }
+
+    componentDidMount(){
+      this.getClientFullInfo();
+    }
+
+    dataChecker(){
+      let userSearch = this.props.clientSearch.toUpperCase();
+      let subStr = this.state.clientFullData.map(data=>{
+        return data.substring(0,this.props.clientSearch.length).toUpperCase();
+      });
+      console.log(subStr);
+       return window.$.inArray(userSearch , subStr);
+    }
+
 
   render(){
     return(
       <div class="ui list selection celled big">
-  <div class='item' id={this.props.clientID} onClick={this.handleClick}>
+  <div class='item' id={this.props.clientID} onClick={this.handleClick} >
     <img class="ui mini image" src={this.props.client.general.avatar} />
     <div class="content">
       <div class="header">{this.props.client.general.firstName} {this.props.client.general.lastName}</div>
